@@ -1,5 +1,8 @@
 {
   "nodeModulesDir": "auto",
   "tasks": { "example:dev": "deno task --cwd=example dev" },
-  "workspace": ["src/*", "example"]
+  "workspace": ["src/*", "example"],
+  "compilerOptions": {
+    "lib": ["dom", "deno.ns"]
+  }
 }
