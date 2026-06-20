@@ -7,7 +7,7 @@
     <title>WyvernJS</title>
   </head>
   <body>
-    <div w-scope="{a: 0}">
+    <div w-scope="{a: 0}" w-bind="{'aria-label': 'counter'}">
       <p w-text="a"></p>
       <p w-computed:double="() => a*2" w-text="double"></p>
       <button type="button" w-on:click="() => a++">inc</button>
