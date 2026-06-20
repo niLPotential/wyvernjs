@@ -3,10 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="/src/main.ts"></script>
     <title>WyvernJS</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div w-scope="{a: 0}">
+      <p w-text="a"></p>
+      <button type="button" w-on:click="() => a++">inc</button>
+    </div>
   </body>
 </html>
