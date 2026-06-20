@@ -2,7 +2,7 @@ import type { computed, Ref, watch } from "@vue/reactivity";
 
 export interface Directive {
   name: string;
-  handle: (ctx: DirectiveContext) => void;
+  handler: (ctx: DirectiveContext) => void;
 }
 
 export interface DirectiveContext {
