@@ -1,0 +1,8 @@
+{
+  "name": "@wyvernjs/core",
+  "version": "0.0.0",
+  "exports": "./mod.ts",
+  "imports": {
+    "@vue/reactivity": "npm:@vue/reactivity@^3.5.38"
+  }
+}
