@@ -11,10 +11,11 @@
       <p w-text="a"></p>
       <p w-computed:double="a*2" w-text="double"></p>
       <button type="button" w-on:click="a++">inc</button>
-    </div>
 
-    <div w-scope="{b: 0}">
-      <p w-text="a"></p>
+      <div w-scope="{b: -1}">
+        <p w-text="a"></p>
+        <p w-text="b"></p>
+      </div>
       <p w-text="b"></p>
     </div>
   </body>
