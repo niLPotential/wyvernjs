@@ -2,13 +2,17 @@ import type { computed, Ref, watch } from "@vue/reactivity";
 
 export interface Directive {
   name: string;
-  handler: (ctx: DirectiveContext) => void;
+  handler: DirectiveHandler;
+}
+
+export interface DirectiveHandler {
+  (ctx: DirectiveContext): () => void;
 }
 
 export interface DirectiveContext {
   // deno-lint-ignore no-explicit-any
-  evaluate: (scope: Ref, exp: string, el: Element) => () => any;
-  scope: Ref<object>;
+  evaluate: (scope: Scope, exp: string, el: Element) => () => any;
+  scope: Scope;
   el: Element;
   computed: typeof computed;
   watch: typeof watch;
@@ -16,3 +20,5 @@ export interface DirectiveContext {
   argument: string | null;
   modifiers: string[];
 }
+
+export type Scope = Ref<object[]>;
