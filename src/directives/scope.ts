@@ -3,6 +3,8 @@ import type { Directive } from "@wyvernjs/core";
 export const scope: Directive = {
   name: "w-scope",
   handler({ el, evaluate, scope, expression }) {
-    Object.assign(scope.value, evaluate(scope, expression!, el)());
+    scope.value.push(evaluate(scope, expression!, el)());
+
+    return () => scope.value.pop();
   },
 };

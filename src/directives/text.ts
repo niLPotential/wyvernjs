@@ -3,10 +3,11 @@ import type { Directive } from "@wyvernjs/core";
 export const text: Directive = {
   name: "w-text",
   handler({ el, evaluate, scope, expression, watch }) {
-    watch(
+    const watcher = watch(
       evaluate(scope, expression!, el),
       (value) => el.textContent = value,
       { immediate: true },
     );
+    return () => watcher.stop();
   },
 };

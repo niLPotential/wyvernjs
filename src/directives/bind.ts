@@ -3,7 +3,7 @@ import type { Directive } from "@wyvernjs/core";
 export const bind: Directive = {
   name: "w-bind",
   handler({ evaluate, scope, el, expression, watch }) {
-    watch(
+    const watcher = watch(
       evaluate(scope, expression!, el),
       (bindings: Record<string, string>) => {
         for (const [name, value] of Object.entries(bindings)) {
@@ -12,5 +12,6 @@ export const bind: Directive = {
       },
       { immediate: true },
     );
+    return () => watcher.stop();
   },
 };
