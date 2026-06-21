@@ -49,7 +49,7 @@ export class Wyvern {
     }
   }
 
-  static directives = new Map<string, (ctx: DirectiveContext) => void>();
+  static directives: Map<string, (ctx: DirectiveContext) => void> = new Map();
 
   static directive(d: Directive) {
     this.directives.set(d.name, d.handler);
