@@ -1,6 +1,6 @@
 import type { Ref } from "@vue/reactivity";
 import { computed, ref, watch } from "@vue/reactivity";
-import type { Directive, DirectiveContext } from "./types.ts";
+import type { Directive, DirectiveHandler, Scope } from "./types.ts";
 import { evaluate } from "./evaluate.ts";
 
 export class Wyvern {
@@ -11,12 +11,12 @@ export class Wyvern {
 
     const roots = Array.from(document.querySelectorAll("[w-scope]"))
       .filter((root) => !root.matches("[w-scope] [w-scope]"));
-    roots.forEach((root) => this.walk(root, this.global));
+    roots.forEach((root) => this.walk(root, ref([this.global.value])));
   }
 
-  private apply(el: Element, scope: Ref) {
+  private apply(el: Element, scope: Scope) {
     const dirs = Array.from(Wyvern.directives.keys());
-    el.getAttributeNames()
+    return el.getAttributeNames()
       .map((name) => {
         const expression = el.getAttribute(name);
         const [attr, ...modifiers] = name.split(".");
@@ -27,7 +27,7 @@ export class Wyvern {
       })
       .filter(({ dirName }) => Wyvern.directives.has(dirName))
       .sort((a, b) => dirs.indexOf(a.dirName) - dirs.indexOf(b.dirName))
-      .forEach(({ dirName, ...dir }) =>
+      .map(({ dirName, ...dir }) =>
         Wyvern.directives.get(dirName)!({
           el,
           scope,
@@ -39,7 +39,8 @@ export class Wyvern {
       );
   }
 
-  private walk(el: Element, scope: Ref) {
+  private walk(el: Element, scope: Scope) {
+    // const cleanups =
     this.apply(el, scope);
 
     let child = el.firstElementChild;
@@ -47,9 +48,10 @@ export class Wyvern {
       this.walk(child, scope);
       child = child.nextElementSibling;
     }
+    // cleanups.forEach((cleanup) => cleanup());
   }
 
-  static directives: Map<string, (ctx: DirectiveContext) => void> = new Map();
+  static directives: Map<string, DirectiveHandler> = new Map();
 
   static directive(d: Directive) {
     this.directives.set(d.name, d.handler);
